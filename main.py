@@ -181,7 +181,7 @@ class terminal:
             os.rmdir(directory)
 
         elif self.command == "update":
-            self.updateTerm()
+            os.startfile("setup.exe")
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
