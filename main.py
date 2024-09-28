@@ -159,6 +159,8 @@ class terminal:
             except Exception as e:
                 print(Fore.RED+"Error: "+str(e))
 
+        elif self.command == "version": print(" ~ Version: 0.0.1")
+
         elif self.command.startswith("pwd"): print(Fore.LIGHTYELLOW_EX+"Current working directory: "+Fore.WHITE+self.current_directory)
 
         elif self.command.startswith("cd"):
