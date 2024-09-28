@@ -359,7 +359,7 @@ class terminal:
             print(self.response.json())
 
     def updateTerm(self):
-        subprocess.Popen([sys.executable, 'update.py'], close_fds=True)
+        subprocess.Popen([sys.executable, 'setup.py'], close_fds=True)
 
     def delete_github_repo(self, token, owner, repo_name):
         self.url = f"https://api.github.com/repos/{owner}/{repo_name}"
