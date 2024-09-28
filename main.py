@@ -182,7 +182,7 @@ class terminal:
 
         elif self.command == "update":
             os.system("exit")
-            subprocess.Popen([sys.executable, 'update.py'])
+            subprocess.Popen([sys.executable, 'setup.py'])
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
