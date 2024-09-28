@@ -33,7 +33,7 @@ class terminal:
                 f.close()
 
             self.current_directory = os.getcwd()
-            print(Fore.LIGHTYELLOW_EX+f"({self.current_directory}) "+Fore.LIGHTGREEN_EX+"("+self.username+") "+Fore.LIGHTBLUE_EX+"prompt "+Fore.WHITE+"$ mdslad ", end="")
+            print(Fore.LIGHTYELLOW_EX+f"({self.current_directory}) "+Fore.LIGHTGREEN_EX+"("+self.username+") "+Fore.LIGHTBLUE_EX+"prompt "+Fore.WHITE+"$ ", end="")
             self.command = input("")
             self.return_ = self.getCommand(self.command)
             if self.return_ is not None: pass
