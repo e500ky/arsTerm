@@ -210,62 +210,65 @@ class terminal:
                 print(Fore.RED+"Error: File not found.")
 
         elif self.command.startswith("github"):
-
-            action = self.command.split(" ")[1]
-            if action == "create":
-                if self.github_get["token"] == "None":
+            try:
+                action = self.command.split(" ")[1]
+                if action == "create":
+                    if self.github_get["token"] == "None":
+                        print(Fore.LIGHTYELLOW_EX+"Github Token: "+Style.RESET_ALL, end="")
+                        token = input()
+                        print(Fore.LIGHTYELLOW_EX+"Github Username: "+Style.RESET_ALL, end="")
+                        uname = input()
+                    else:
+                        token = self.github_get["token"]
+                        uname = self.github_get["name"]
+                    print(Fore.LIGHTYELLOW_EX+"Repo Name: "+Style.RESET_ALL, end="")
+                    self.rname = input()
+                    print(Fore.LIGHTYELLOW_EX+"Repo State (Private[Y]/Public[n]): "+Style.RESET_ALL, end="")
+                    self.rstate = input()
+                    while True:
+                            if self.rstate == "Y" or self.rstate == "y":
+                                self.rstate = True
+                                break
+                            elif self.rstate == "N" or self.rstate == "n":
+                                self.rstate = False
+                                break
+                            else:
+                                print(Fore.RED+"Error: Invalid choice. Please enter 'Y' for Private or 'N' for Public.")
+                                print(Fore.LIGHTYELLOW_EX+"Repo State (Private[Y]/Public[n]): "+Style.RESET_ALL, end="")
+                                self.rstate = input()
+                                continue
+                    self.create_github_repo(token=token, owner=uname, repo_name=self.rname, state=self.rstate)
+                elif action == "delete":
+                    if self.github_get["token"] == "None":
+                        print(Fore.LIGHTYELLOW_EX+"Github Token: "+Style.RESET_ALL, end="")
+                        token = input()
+                        print(Fore.LIGHTYELLOW_EX+"Github Username: "+Style.RESET_ALL, end="")
+                        uname = input()
+                    else:
+                        token = self.github_get["token"]
+                        uname = self.github_get["name"]
+    
+                    print(Fore.LIGHTYELLOW_EX+"Repo Name: "+Style.RESET_ALL, end="")
+                    self.rname = input()
+                    self.delete_github_repo(token=token, owner=uname, repo_name=self.rname)
+                elif action == "save":
                     print(Fore.LIGHTYELLOW_EX+"Github Token: "+Style.RESET_ALL, end="")
-                    token = input()
+                    self.save_token = input()
                     print(Fore.LIGHTYELLOW_EX+"Github Username: "+Style.RESET_ALL, end="")
-                    uname = input()
+                    self.save_g_name = input()
+                    self.saveGit = {
+                        "token": self.save_token,
+                        "name": self.save_g_name
+                    }
+                    with open("C:/Terminal/github.json", "w", encoding="utf-8") as f:
+                        json.dump(self.saveGit, f, ensure_ascii=False)
+                        f.close()
+                        print("Github token saved successfully.")
                 else:
-                    token = self.github_get["token"]
-                    uname = self.github_get["name"]
-                print(Fore.LIGHTYELLOW_EX+"Repo Name: "+Style.RESET_ALL, end="")
-                self.rname = input()
-                print(Fore.LIGHTYELLOW_EX+"Repo State (Private[Y]/Public[n]): "+Style.RESET_ALL, end="")
-                self.rstate = input()
-                while True:
-                        if self.rstate == "Y" or self.rstate == "y":
-                            self.rstate = True
-                            break
-                        elif self.rstate == "N" or self.rstate == "n":
-                            self.rstate = False
-                            break
-                        else:
-                            print(Fore.RED+"Error: Invalid choice. Please enter 'Y' for Private or 'N' for Public.")
-                            print(Fore.LIGHTYELLOW_EX+"Repo State (Private[Y]/Public[n]): "+Style.RESET_ALL, end="")
-                            self.rstate = input()
-                            continue
-                self.create_github_repo(token=token, owner=uname, repo_name=self.rname, state=self.rstate)
-            elif action == "delete":
-                if self.github_get["token"] == "None":
-                    print(Fore.LIGHTYELLOW_EX+"Github Token: "+Style.RESET_ALL, end="")
-                    token = input()
-                    print(Fore.LIGHTYELLOW_EX+"Github Username: "+Style.RESET_ALL, end="")
-                    uname = input()
-                else:
-                    token = self.github_get["token"]
-                    uname = self.github_get["name"]
+                    print("Invalid action. Use 'create','delete' or 'token'.")
 
-                print(Fore.LIGHTYELLOW_EX+"Repo Name: "+Style.RESET_ALL, end="")
-                self.rname = input()
-                self.delete_github_repo(token=token, owner=uname, repo_name=self.rname)
-            elif action == "save":
-                print(Fore.LIGHTYELLOW_EX+"Github Token: "+Style.RESET_ALL, end="")
-                self.save_token = input()
-                print(Fore.LIGHTYELLOW_EX+"Github Username: "+Style.RESET_ALL, end="")
-                self.save_g_name = input()
-                self.saveGit = {
-                    "token": self.save_token,
-                    "name": self.save_g_name
-                }
-                with open("C:/Terminal/github.json", "w", encoding="utf-8") as f:
-                    json.dump(self.saveGit, f, ensure_ascii=False)
-                    f.close()
-                    print("Github token saved successfully.")
-            else:
-                print("Invalid action. Use 'create','delete' or 'token'.")
+            except Exception as e:
+                print(Fore.RED+"Error: "+str(e))
 
         elif self.command.startswith("gs"):
             try:
