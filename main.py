@@ -180,6 +180,7 @@ class terminal:
 
         elif self.command == "update":
             os.startfile("update.py")
+            os.system("exit")
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
