@@ -179,8 +179,8 @@ class terminal:
             os.rmdir(directory)
 
         elif self.command == "update":
+            os.system("exit")
             os.startfile("update.py")
-            self.close_terminal()
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
