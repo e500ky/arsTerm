@@ -180,7 +180,7 @@ class terminal:
 
         elif self.command == "update":
             os.startfile("update.py")
-            os.system("exit")
+            self.close_terminal()
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
@@ -356,6 +356,9 @@ class terminal:
         else:
             print(Fore.LIGHTYELLOW_EX+f"Failed to create repository: {Style.RESET_ALL+str(self.response.status_code)}")
             print(self.response.json())
+
+    def close_terminal(self):
+        os._exit(0)
 
     def delete_github_repo(self, token, owner, repo_name):
         self.url = f"https://api.github.com/repos/{owner}/{repo_name}"
