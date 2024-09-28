@@ -181,8 +181,7 @@ class terminal:
             os.rmdir(directory)
 
         elif self.command == "update":
-            os.system("exit")
-            subprocess.Popen([sys.executable, 'setup.py'])
+            self.updateTerm()
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
@@ -359,8 +358,8 @@ class terminal:
             print(Fore.LIGHTYELLOW_EX+f"Failed to create repository: {Style.RESET_ALL+str(self.response.status_code)}")
             print(self.response.json())
 
-    def close_terminal(self):
-        os._exit(0)
+    def updateTerm(self):
+        subprocess.Popen([sys.executable, 'update.py'])
 
     def delete_github_repo(self, token, owner, repo_name):
         self.url = f"https://api.github.com/repos/{owner}/{repo_name}"
