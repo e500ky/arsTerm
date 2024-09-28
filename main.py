@@ -9,6 +9,8 @@ from rich import box
 from rich.syntax import Syntax
 import requests
 from bs4 import BeautifulSoup
+import subprocess
+import sys
 
 console = Console()
 
@@ -180,7 +182,7 @@ class terminal:
 
         elif self.command == "update":
             os.system("exit")
-            os.startfile("update.py")
+            subprocess.Popen([sys.executable, 'update.py'])
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
