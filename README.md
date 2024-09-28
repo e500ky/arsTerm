@@ -31,3 +31,8 @@
 6. rich
 7. requests
 8. bs4
+
+## 📨 Contact
+
+**Email:** arstechai@gmail.com
+**Twitter:** @arstechai
