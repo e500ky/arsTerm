@@ -1,3 +1,4 @@
+from traceback import print_tb
 from colorama import Back, Fore, Style
 import os
 import json
@@ -72,6 +73,7 @@ class terminal:
             print("   "+Fore.LIGHTYELLOW_EX+"   └type*           "+Style.RESET_ALL+" 'python', 'web' or ex..")
             print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐               "+                " ---OPEN---PROJECT---")
             print("   "+Fore.LIGHTYELLOW_EX+"    └name*          "+Style.RESET_ALL+" Project name.")
+            print(" ~ "+Fore.LIGHTYELLOW_EX+"update              "+Style.RESET_ALL+" Update the terminal.")
 
         elif self.command == "exit": return "exit"
         elif self.command.startswith("ls"):self.listFilesAndDirectories()
@@ -175,6 +177,9 @@ class terminal:
         elif self.command.startswith("rmdir"):
             directory = self.command.split(" ")[1]
             os.rmdir(directory)
+
+        elif self.command == "update":
+            os.startfile("update.py")
 
         elif self.command.startswith("cat"):
             file = self.command.split(" ")[1]
