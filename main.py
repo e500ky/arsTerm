@@ -190,7 +190,7 @@ class terminal:
                 os.system("cls")
                 import setup
                 os.system("cls")
-                print(" ~ "+Fore.GREEN+"Terminal updated successfully.\n"+Style.RESET_ALL+"   Restar terminal.")
+                print(" ~ "+Fore.GREEN+"Terminal updated successfully.\n"+Style.RESET_ALL+"   Restart terminal.")
 
             elif self.command.startswith("cat"):
                 file = self.command.split(" ")[1]
