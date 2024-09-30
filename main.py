@@ -95,7 +95,7 @@ try:
                             f.write("# "+project_name+"\n")
                             f.close()
                         with open(f"{project_name}/main.py", "w", encoding="utf-8") as f:
-                            f.write(f"""print("Hello, World!") #{project_name}\main.py""")
+                            f.write(f"""print("Hello, World!") #{project_name}-main.py""")
                             f.close()
                         print(" ~ "+Fore.GREEN+"Project created successfully."+Style.RESET_ALL)
                         print(f" ~ You can open your project by typing 'open {project_name}'.")
