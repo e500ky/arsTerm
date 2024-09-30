@@ -180,7 +180,11 @@ try:
                 os.rmdir(directory)
 
             elif self.command == "update":
-                os.startfile("setup.py")
+                print("Updating: "+Fore.GREEN+str(self.current_directory)+Style.RESET_ALL)
+                os.system("cls")
+                import setup
+                os.system("cls")
+                print(" ~ "+Fore.GREEN+"Terminal updated successfully.\n"+Style.RESET_ALL+"   Restar terminal.")
 
             elif self.command.startswith("cat"):
                 file = self.command.split(" ")[1]
