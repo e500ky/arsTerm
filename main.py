@@ -83,9 +83,9 @@ class terminal:
             elif self.command == "exit": return "exit"
             elif self.command == "version": print(Fore.LIGHTYELLOW_EX+"Verison: "+Style.RESET_ALL+"0.1.7")
             elif self.command == "restart":
-                os.system("exit")
-                time.sleep(0.5)
                 os.startfile("Terminal.exe")
+                time.sleep(0.5)
+                os.system("exit")
             elif self.command.startswith("ls"):self.listFilesAndDirectories()
             elif self.command.startswith("clear"): os.system("cls")
             elif self.command.startswith("new"):
