@@ -76,11 +76,9 @@ class terminal:
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐               "+                " ---OPEN---PROJECT---")
                 print("   "+Fore.LIGHTYELLOW_EX+"    └name*          "+Style.RESET_ALL+" Project name.")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"update              "+Style.RESET_ALL+" Update the terminal.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"restart             "+Style.RESET_ALL+" Restart the terminal.")
 
 
             elif self.command == "exit": return "exit"
-            elif self.command == "version": print(Fore.LIGHTYELLOW_EX+"Verison: "+Style.RESET_ALL+"0.1.7")
             elif self.command.startswith("ls"):self.listFilesAndDirectories()
             elif self.command.startswith("clear"): os.system("cls")
             elif self.command.startswith("new"):
