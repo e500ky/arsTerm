@@ -76,8 +76,13 @@ class terminal:
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐               "+                " ---OPEN---PROJECT---")
                 print("   "+Fore.LIGHTYELLOW_EX+"    └name*          "+Style.RESET_ALL+" Project name.")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"update              "+Style.RESET_ALL+" Update the terminal.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"restart             "+Style.RESET_ALL+" Restart the terminal.")
 
             elif self.command == "exit": return "exit"
+            elif self.command == "restart":
+                os.system("exit")
+                time.sleep(0.5)
+                os.startfile("Terminal.exe")
             elif self.command.startswith("ls"):self.listFilesAndDirectories()
             elif self.command.startswith("clear"): os.system("cls")
             elif self.command.startswith("new"):
