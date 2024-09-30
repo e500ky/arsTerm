@@ -1,4 +1,3 @@
-
 from traceback import print_tb
 from colorama import Back, Fore, Style
 import os
@@ -18,16 +17,21 @@ class terminal:
         os.system("cls")
         self.projectCD = os.getcwd()
         while True:
-            with open("C:/Terminal/user.json", encoding="utf-8") as f:
+            with open(f"{self.projectCD}/config.json", encoding="utf-8") as f:
+                self.d = json.load(f)
+                self.current_directory = self.d["$default.folder"]
+                os.chdir(self.current_directory)
+                f.close()
+            with open(f"{self.projectCD}/user.json", encoding="utf-8") as f:
                 self.user = json.load(f)
                 f.close()
             if self.user["name"] == "None":
                 self.newStart()
-            with open("C:/Terminal/user.json", encoding="utf-8") as f:
+            with open(f"{self.projectCD}/user.json", encoding="utf-8") as f:
                 self.user = json.load(f)
                 self.username = self.user["name"]
                 f.close()
-            with open("C:/Terminal/github.json", encoding="utf-8") as f:
+            with open(f"{self.projectCD}/github.json", encoding="utf-8") as f:
                 self.github_get = json.load(f)
                 f.close()
 
@@ -52,18 +56,18 @@ class terminal:
                     print(Fore.RED+f"Error: {e}")
             elif self.command == "help":
                 print("")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"help                "+Style.RESET_ALL+" Get help.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"ls                  "+Style.RESET_ALL+" List files and directories.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"pwd                 "+Style.RESET_ALL+" Print the current working directory.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"cd <directory>      "+Style.RESET_ALL+" Change the current working directory.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"mkdir <directory>   "+Style.RESET_ALL+" Create a new directory.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"rmdir <directory>   "+Style.RESET_ALL+" Remove a directory.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"cat <file>          "+Style.RESET_ALL+" Read the contents of a file.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"rm <file>           "+Style.RESET_ALL+" Remove a file.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"exit                "+Style.RESET_ALL+" Exit the terminal.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"cmd <command>       "+Style.RESET_ALL+" Run the CMD command.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"gs <site-link>      "+Style.RESET_ALL+" Gets the codes of the given site.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"clear               "+Style.RESET_ALL+" Clears the terminal.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"help                "+Style.RESET_ALL+" Get help")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"ls                  "+Style.RESET_ALL+" List files and directories")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"pwd                 "+Style.RESET_ALL+" Print the current working directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"cd <directory>      "+Style.RESET_ALL+" Change the current working directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"mkdir <directory>   "+Style.RESET_ALL+" Create a new directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"rmdir <directory>   "+Style.RESET_ALL+" Remove a directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"cat <file>          "+Style.RESET_ALL+" Read the contents of a file")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"rm <file>           "+Style.RESET_ALL+" Remove a file")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"exit                "+Style.RESET_ALL+" Exit the terminal")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"cmd <command>       "+Style.RESET_ALL+" Run the CMD command")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"gs <site-link>      "+Style.RESET_ALL+" Gets the codes of the given site")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"clear               "+Style.RESET_ALL+" Clears the terminal")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"github┐             "+                " -------GITHUB-------")
                 print("   "+Fore.LIGHTYELLOW_EX+"      ├create       "+Style.RESET_ALL+" Create github repos.")
                 print("   "+Fore.LIGHTYELLOW_EX+"      ├delete       "+Style.RESET_ALL+" Delete github repos.")
@@ -76,7 +80,6 @@ class terminal:
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐               "+                " ---OPEN---PROJECT---")
                 print("   "+Fore.LIGHTYELLOW_EX+"    └name*          "+Style.RESET_ALL+" Project name.")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"update              "+Style.RESET_ALL+" Update the terminal.")
-
 
             elif self.command == "exit": return "exit"
             elif self.command.startswith("ls"):self.listFilesAndDirectories()
@@ -167,7 +170,7 @@ class terminal:
                     directory = self.command.split(" ")[1]
                     os.chdir(directory)
                     self.current_directory = os.getcwd()
-                    with open("C:/Terminal/config.json", "w", encoding="utf-8") as f:
+                    with open(f"{self.projectCD}/config.json", "w", encoding="utf-8") as f:
                             json.dump({"$default.folder": self.current_directory}, f, ensure_ascii=False)
                             f.close()
                 except Exception as e:
@@ -186,9 +189,7 @@ class terminal:
                 os.system("cls")
                 import setup
                 os.system("cls")
-                print(" ~ "+Fore.GREEN+"Terminal updated successfully.\n"+Style.RESET_ALL+"   Restart terminal.")
-                print("\nPress anykey to exit...")
-                break
+                print(" ~ "+Fore.GREEN+"Terminal updated successfully.\n"+Style.RESET_ALL+"   Restar terminal.")
 
             elif self.command.startswith("cat"):
                 file = self.command.split(" ")[1]
@@ -264,7 +265,7 @@ class terminal:
                         "token": self.save_token,
                         "name": self.save_g_name
                     }
-                    with open("C:/Terminal/github.json", "w", encoding="utf-8") as f:
+                    with open(f"{self.projectCD}/github.json", "w", encoding="utf-8") as f:
                         json.dump(self.saveGit, f, ensure_ascii=False)
                         f.close()
                         print("Github token saved successfully.")
@@ -325,10 +326,10 @@ class terminal:
             "token": "None",
             "name": "None"
         }
-        with open("C:/Terminal/user.json", "w", encoding="utf-8") as f:
+        with open(f"{self.projectCD}/user.json", "w", encoding="utf-8") as f:
             json.dump(self.user, f, ensure_ascii=False)
             f.close()
-        with open("C:/Terminal/github.json", "w", encoding="utf-8") as f:
+        with open(f"{self.projectCD}/github.json", "w", encoding="utf-8") as f:
             json.dump(self.delGit, f, ensure_ascii=False)
             f.close()
         os.system("cls")
@@ -340,7 +341,7 @@ class terminal:
     def newStart(self):
         print(Fore.LIGHTYELLOW_EX+"NAME: "+Style.RESET_ALL, end="")
         self.uname = input()
-        with open("C:/Terminal/user.json", "w", encoding="utf-8") as f:
+        with open(f"{self.projectCD}/user.json", "w", encoding="utf-8") as f:
             json.dump({"name": self.uname}, f, ensure_ascii=False)
             f.close()
         os.system("cls")
