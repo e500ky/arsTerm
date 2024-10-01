@@ -1,8 +1,10 @@
+
 from traceback import print_tb
 from colorama import Back, Fore, Style
 import os
 import json
 import time
+import googletrans
 from rich.console import Console
 from rich.table import Table
 from rich import box
@@ -21,6 +23,11 @@ class terminal:
                 self.d = json.load(f)
                 self.current_directory = self.d["$default.folder"]
                 os.chdir(self.current_directory)
+                f.close()
+
+            with open(f"{self.projectCD}/config.json", encoding="utf-8") as f:
+                self.d = json.load(f)
+                self.language = self.d["$default.language"]
                 f.close()
             with open(f"{self.projectCD}/user.json", encoding="utf-8") as f:
                 self.user = json.load(f)
@@ -56,34 +63,48 @@ class terminal:
                     print(Fore.RED+f"Error: {e}")
             elif self.command == "help":
                 print("")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"help                "+Style.RESET_ALL+" Get help")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"ls                  "+Style.RESET_ALL+" List files and directories")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"pwd                 "+Style.RESET_ALL+" Print the current working directory")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"cd <directory>      "+Style.RESET_ALL+" Change the current working directory")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"mkdir <directory>   "+Style.RESET_ALL+" Create a new directory")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"rmdir <directory>   "+Style.RESET_ALL+" Remove a directory")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"cat <file>          "+Style.RESET_ALL+" Read the contents of a file")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"rm <file>           "+Style.RESET_ALL+" Remove a file")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"exit                "+Style.RESET_ALL+" Exit the terminal")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"cmd <command>       "+Style.RESET_ALL+" Run the CMD command")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"gs <site-link>      "+Style.RESET_ALL+" Gets the codes of the given site")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"clear               "+Style.RESET_ALL+" Clears the terminal")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"github┐             "+                " -------GITHUB-------")
-                print("   "+Fore.LIGHTYELLOW_EX+"      ├create       "+Style.RESET_ALL+" Create github repos.")
-                print("   "+Fore.LIGHTYELLOW_EX+"      ├delete       "+Style.RESET_ALL+" Delete github repos.")
-                print("   "+Fore.LIGHTYELLOW_EX+"      └save         "+Style.RESET_ALL+" Save your github token.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"run <app-name>      "+Style.RESET_ALL+" Runs the application you specify located in the current directory.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"reset               "+Style.RESET_ALL+" Resets the terminal.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"new┐                "+                " ----NEW--PROJECT----")
-                print("   "+Fore.LIGHTYELLOW_EX+"   ├name*           "+Style.RESET_ALL+" Project name.")
-                print("   "+Fore.LIGHTYELLOW_EX+"   └type*           "+Style.RESET_ALL+" 'python', 'web' or ex..")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐               "+                " ---OPEN---PROJECT---")
-                print("   "+Fore.LIGHTYELLOW_EX+"    └name*          "+Style.RESET_ALL+" Project name.")
-                print(" ~ "+Fore.LIGHTYELLOW_EX+"update              "+Style.RESET_ALL+" Update the terminal.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"help                       "+Style.RESET_ALL+" Get help")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"ls                         "+Style.RESET_ALL+" List files and directories")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"pwd                        "+Style.RESET_ALL+" Print the current working directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"cd <directory>             "+Style.RESET_ALL+" Change the current working directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"mkdir <directory>          "+Style.RESET_ALL+" Create a new directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"rmdir <directory>          "+Style.RESET_ALL+" Remove a directory")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"cat <file>                 "+Style.RESET_ALL+" Read the contents of a file")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"rm <file>                  "+Style.RESET_ALL+" Remove a file")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"exit                       "+Style.RESET_ALL+" Exit the terminal")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"cmd <command>              "+Style.RESET_ALL+" Run the CMD command")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"gs <site-link>             "+Style.RESET_ALL+" Gets the codes of the given site")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"clear                      "+Style.RESET_ALL+" Clears the terminal")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"github┐                    "+                " -------GITHUB-------")
+                print("   "+Fore.LIGHTYELLOW_EX+"      ├create              "+Style.RESET_ALL+" Create github repos.")
+                print("   "+Fore.LIGHTYELLOW_EX+"      ├delete              "+Style.RESET_ALL+" Delete github repos.")
+                print("   "+Fore.LIGHTYELLOW_EX+"      └save                "+Style.RESET_ALL+" Save your github token.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"run <app-name>             "+Style.RESET_ALL+" Runs the application you specify located in the current directory.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"reset                      "+Style.RESET_ALL+" Resets the terminal.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"new┐                       "+                " ----NEW--PROJECT----")
+                print("   "+Fore.LIGHTYELLOW_EX+"   ├name*                  "+Style.RESET_ALL+" Project name.")
+                print("   "+Fore.LIGHTYELLOW_EX+"   └type*                  "+Style.RESET_ALL+" 'python', 'web' or ex..")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐                      "+                " ---OPEN---PROJECT---")
+                print("   "+Fore.LIGHTYELLOW_EX+"    └name*                 "+Style.RESET_ALL+" Project name.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"update                     "+Style.RESET_ALL+" Update the terminal.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"translate <lang> <text>    "+Style.RESET_ALL+" It translates the text you enter into the language you specify.")
+                print(" ~ "+Fore.LIGHTYELLOW_EX+"version                    "+Style.RESET_ALL+" Version number.")
 
             elif self.command == "exit": return "exit"
             elif self.command.startswith("ls"):self.listFilesAndDirectories()
             elif self.command.startswith("clear"): os.system("cls")
+            elif self.command == "version": print(Fore.LIGHTBLUE_EX+"Version: "+Style.RESET_ALL+" 0.2.4")
+            elif self.command.startswith("translate"):
+                try:
+                    lan = self.command.split(" ")[1]
+                    words = self.command.split()
+                    # İlk iki kelimeyi atla ve kalanları yazdır
+                    text = " ".join(words[2:])
+                    translator = googletrans.Translator()
+                    result = translator.translate(text, dest=lan)
+                    print(Fore.GREEN+f"Translation: {Style.RESET_ALL+result.text}")
+                except Exception as e:
+                    print(Fore.RED+f"Error: {e}")
             elif self.command.startswith("new"):
                 try:
                     project_name = self.command.split(" ")[1]
@@ -171,7 +192,8 @@ class terminal:
                     os.chdir(directory)
                     self.current_directory = os.getcwd()
                     with open(f"{self.projectCD}/config.json", "w", encoding="utf-8") as f:
-                            json.dump({"$default.folder": self.current_directory}, f, ensure_ascii=False)
+                            json.dump({"$default.folder": self.current_directory,
+                                       "$default.language": self.language}, f, ensure_ascii=False)
                             f.close()
                 except Exception as e:
                     print(Fore.RED+"Error: "+str(e))
@@ -366,6 +388,7 @@ class terminal:
         else:
             print(Fore.LIGHTYELLOW_EX+f"Failed to create repository: {Style.RESET_ALL+str(self.response.status_code)}")
             print(self.response.json())
+
 
     def delete_github_repo(self, token, owner, repo_name):
         self.url = f"https://api.github.com/repos/{owner}/{repo_name}"
