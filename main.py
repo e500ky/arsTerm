@@ -83,7 +83,7 @@ class terminal:
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"reset                      "+Style.RESET_ALL+" Resets the terminal.")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"new┐                       "+                " ----NEW--PROJECT----")
                 print("   "+Fore.LIGHTYELLOW_EX+"   ├name*                  "+Style.RESET_ALL+" Project name.")
-                print("   "+Fore.LIGHTYELLOW_EX+"   └type*                  "+Style.RESET_ALL+" 'python', 'web' or ex..")
+                print("   "+Fore.LIGHTYELLOW_EX+"   └type*                  "+Style.RESET_ALL+" 'python', 'web' or 'java'")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"open┐                      "+                " ---OPEN---PROJECT---")
                 print("   "+Fore.LIGHTYELLOW_EX+"    └name*                 "+Style.RESET_ALL+" Project name.")
                 print(" ~ "+Fore.LIGHTYELLOW_EX+"update                     "+Style.RESET_ALL+" Update the terminal.")
@@ -109,7 +109,7 @@ class terminal:
                 try:
                     project_name = self.command.split(" ")[1]
                     project_type = self.command.split(" ")[2]
-                    if project_type not in ["python", "web"]:
+                    if project_type not in ["python", "web","java"]:
                         print(Fore.RED+"Error: Invalid project type. Use 'python' or 'web'.")
                         return
                     os.makedirs(project_name)
@@ -122,6 +122,25 @@ class terminal:
                             f.close()
                         with open(f"{project_name}/main.py", "w", encoding="utf-8") as f:
                             f.write(f"""print("Hello, World!") #{project_name}-main.py""")
+                            f.close()
+                        print(" ~ "+Fore.GREEN+"Project created successfully."+Style.RESET_ALL)
+                        print(f" ~ You can open your project by typing 'open {project_name}'.")
+
+                    elif project_type == "java":
+                        with open(f"{project_name}/LICENSE", "w", encoding="utf-8") as f:
+                            f.write("MIT License\n\n")
+                            f.close()
+                        with open(f"{project_name}/README.md", "w", encoding="utf-8") as f:
+                            f.write("# "+project_name+"\n")
+                            f.close()
+                        with open(f"{project_name}/Main.java", "w", encoding="utf-8") as f:
+                            f.write("""
+public class Main {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+""")
                             f.close()
                         print(" ~ "+Fore.GREEN+"Project created successfully."+Style.RESET_ALL)
                         print(f" ~ You can open your project by typing 'open {project_name}'.")
