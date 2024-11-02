@@ -36,4 +36,4 @@
 
 **Email:** arstechai@gmail.com
 
-**Twitter:** @arstechai
+**Twitter:** @arstechai[https://x.com/arstechai]
